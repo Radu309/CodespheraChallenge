@@ -1,0 +1,55 @@
+Componente principale:
+    -Backend (API și Baza de date) – Responsabil pentru gestionarea perioadelor de disponibilitate, efectuarea interogarilor și returnarea rezultatelor.
+    -UI pentru administratori – Permite adaugarea, editarea si stergerea perioadelor de disponibilitate.
+    -UI pentru clienti – Permite interogarea disponibilitatilor si vizualizarea detaliilor.
+    -Baza de date – Pastreaza informatiile despre disponibilitate si rezervari.
+
+Utilizarea din perspectiva unui client:
+    Un client poate vedea disponibilitatile serviciului pe o perioada definita.
+    Clientul poate interoga sistemul pentru a verifica disponibilitatea serviciului pe o anumita data si ora sau pe o perioada de timp (ex. intre 1 aprilie si 10 aprilie 2025).
+    In urma interogarii, clientul va primi o lista cu datele si orele disponibile pentru serviciu, pretul si numarul de locuri disponibile.
+
+Utilizarea din perspectiva unui utilizator administrator:
+    Administratorul poate adauga noi perioade de disponibilitate in sistem, specificand detalii precum intervalul de timp, pret, capacitatea maxima, zilele si orele de disponibilitate.
+    Administratorul poate modifica sau sterge perioadele de disponibilitate deja existente.
+    Administratorul va putea vizualiza rapoarte de utilizare, inclusiv numarul de locuri disponibile si vanzarile efectuate.
+
+Entitati:
+    AvailabilityPeriod: Aceasta reprezinta o perioada de disponibilitate pentru serviciu.
+    -start_date: Data de inceput a perioadei de disponibilitate.
+    -end_date: Data de final a perioadei de disponibilitate.
+    -price: Pretul serviciului pentru acea perioada.
+    -capacity: Capacitatea maxima de locuri disponibile.
+    -workDays: Zilele din saptamana in care serviciul este disponibil.
+    -workHours: Intervalul orar in care serviciul este disponibil.
+
+    BookingSlot: Aceasta reprezinta un slot de rezervare disponibil in cadrul unei perioade de disponibilitate.
+    -date: Data si ora exacta a slotului de rezervare.
+    -availableSeats: Numarul de locuri disponibile pentru acea ora.
+
+    Booking:Reprezinta o rezervare efectuata de un client.
+    -ID: Identificatorul unic al rezervarii.
+    -numSeats: Numarul de locuri rezervate.
+
+    Client: Reprezinta un client care poate rezerva locuri in cadrul unui slot de disponibilitate. Contine urmatoarele informatii:
+    -ID: Identificatorul unic al clientului.
+    -name: Numele clientului.
+    -email: Adresa de email a clientului.
+
+Relatii intre clase:
+    AvailabilityPeriod are o relatie de tipul 1:N cu BookingSlot.
+    BookingSlot are o relatie de tipul 1:N cu Booking.
+    Booking are o relatie de tipul N:1 cu Client.
+
+Logica de gestionare:
+    Adaugarea noilor perioade de disponibilitate:
+    -Un administrator va introduce o perioada de disponibilitate specificand datele necesare
+    -Sistemul va crea automat BookingSloturi pentru fiecare ora disponibila in cadrul acelei perioade
+
+    Cautarea disponibilitatilor:
+    -La interogarea disponibilitatilor pentru o perioada de timp data, sistemul va cauta toate obiectele BookingSlot din cadrul unui obiect AvailabilityPeriod in functie de perioada cu care se intersecteaza.
+    -Fiecare slot va fi returnat cu detalii precum data si ora, pretul, numarul de locuri disponibile, si numarul de locuri rezervate pana in momentul respectiv.
+
+Performanta si optimizarea cautarii:
+
+Caching: Rezultatele cautarilor frecvente vor fi stocate in cache pentru a imbunatati performanta interogarilor, mai ales atunci cand utilizatorii cauta aceleasi perioade de disponibilitate de mai multe ori.

@@ -16,8 +16,8 @@ Utilizarea din perspectiva unui utilizator administrator:
 
 Entitati:
     AvailabilityPeriod: Aceasta reprezinta o perioada de disponibilitate pentru serviciu.
-    -start_date: Data de inceput a perioadei de disponibilitate.
-    -end_date: Data de final a perioadei de disponibilitate.
+    -startDate: Data de inceput a perioadei de disponibilitate.
+    -endDate: Data de final a perioadei de disponibilitate.
     -price: Pretul serviciului pentru acea perioada.
     -capacity: Capacitatea maxima de locuri disponibile.
     -workDays: Zilele din saptamana in care serviciul este disponibil.
@@ -51,5 +51,5 @@ Logica de gestionare:
     -Fiecare slot va fi returnat cu detalii precum data si ora, pretul, numarul de locuri disponibile, si numarul de locuri rezervate pana in momentul respectiv.
 
 Performanta si optimizarea cautarii:
-
-Caching: Rezultatele cautarilor frecvente vor fi stocate in cache pentru a imbunatati performanta interogarilor, mai ales atunci cand utilizatorii cauta aceleasi perioade de disponibilitate de mai multe ori.
+    Indexare pe date: Fiecare oibiect ce se cauta va avea un index pe campurile respective precum startDate, endDate pentru a accelera procesul de cautare in DB.
+    Caching: O alta varianta ar putea fi salvarea rezultatelor frecventae in cache.
